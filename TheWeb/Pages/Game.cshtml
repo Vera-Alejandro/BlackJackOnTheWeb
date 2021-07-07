@@ -1,0 +1,42 @@
+﻿@page
+@model TheWeb.Pages.GameModel
+@{
+}
+
+<div class="container">
+    <div class="row">
+        <div class="bg-light col">
+            <img src="https://alejandropersonalstorage.blob.core.windows.net/public-images/BackJack%20Title.png"
+                 alt="Blackjack Logo" />
+        </div>
+
+        <div class="bg-light col">
+            <div class="">Dealer Score Board</div>
+        </div>
+
+        <div class="bg-light col">
+
+            <div class="">Player Score Board</div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="DealerCardPanel" class="bg-light col">
+            <img src="https://alejandropersonalstorage.blob.core.windows.net/public-images/Card Back.png" alt="">
+        </div>
+        <div id="PlayerCardPanel" class="bg-light col">
+            <img src="https://alejandropersonalstorage.blob.core.windows.net/public-images/Card Back.png" alt="">
+        </div>
+    </div>
+    <div class="row py-3">
+        <div class="col-6">
+            <h4 class="text-white">Bet</h4>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-outline-light w-35 mx-2" id="HitButton">Hit</button>
+            <button class="btn btn-outline-light w-35 mx-2" id="StayButton">Stay</button>
+        </div>
+    </div>
+    <div class="row py-3 bg-light">
+
+    </div>
+</div>

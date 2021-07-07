@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blackjack.GamePlay", "Black
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreGameTesting", "CoreGameTesting\CoreGameTesting.csproj", "{9FEB5231-3676-42DF-972D-ADDCD5E73634}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheWeb", "TheWeb\TheWeb.csproj", "{77BD0AEB-954B-484E-A5DF-0CDFABF30CA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheWeb", "TheWeb\TheWeb.csproj", "{77BD0AEB-954B-484E-A5DF-0CDFABF30CA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
