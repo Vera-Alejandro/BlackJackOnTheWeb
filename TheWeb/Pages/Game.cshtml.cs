@@ -7,17 +7,19 @@ namespace TheWeb.Pages
 {
     public class GameModel : PageModel
     {
-        //public string Username { get; set; }
-        //public List<string> PossibleBets { get; }
+        public string Username { get; set; }
+        public List<string> PossibleBets { get; }
 
-        //public GameModel()
-        //{
-        //    foreach(var bet in Enum.GetNames(typeof(BetAmounts)))
-        //    {
-        //        PossibleBets.Add(bet);
-        //    }
+        public GameModel()
+        {
+            PossibleBets = new List<string>();
+            foreach (var bet in Enum.GetNames(typeof(BetAmounts)))
+            {
+                PossibleBets.Add(bet);
+            }
 
-        //}
+        }
+
         public void OnGet()
         {
         }
