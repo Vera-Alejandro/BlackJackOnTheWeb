@@ -1,24 +1,16 @@
-using System;
-using System.Collections.Generic;
+using Blackjack.GamePlay;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using TheWeb.Enums;
 
 namespace TheWeb.Pages
 {
     public class GameModel : PageModel
     {
-        public string Username { get; set; }
-        public List<string> PossibleBets { get; }
+        public string Username { get; set; } = "Guest";
+        public int DealerScore { get; set; } = 0;
+        public int PlayerScore { get; set; } = 0;
+        public int PlayerCash { get; set; } = 0;
+        public GameInstance CurrentGame { get; set; } = new GameInstance();
 
-        public GameModel()
-        {
-            PossibleBets = new List<string>();
-            foreach (var bet in Enum.GetNames(typeof(BetAmounts)))
-            {
-                PossibleBets.Add(bet);
-            }
-
-        }
 
         public void OnGet()
         {

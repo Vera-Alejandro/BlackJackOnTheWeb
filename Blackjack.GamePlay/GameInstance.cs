@@ -1,6 +1,5 @@
 ﻿using Blackjack.Data;
 using Blackjack.Data.Enums;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,36 +7,31 @@ namespace Blackjack.GamePlay
 {
     public partial class GameInstance
     {
-        private Player player { get; set; }
-        private Dealer dealer { get; set; }
-        public Deck deck { get; set; }
+        private Player Player { get; set; }
+        private Dealer Dealer { get; set; }
+        public Deck Deck { get; set; }
 
 
         public GameInstance()
         {
-            player = new Player();
-            dealer = new Dealer();
-            deck = new Deck();
+            Player = new Player();
+            Dealer = new Dealer();
+            Deck = new Deck();
         }
 
         public bool SetBetAmount(float betAmount)
         {
-            return player.PlaceBet(betAmount);
+            return Player.PlaceBet(betAmount);
         }
 
         public float GetPlayerCash()
         {
-            return player.Cash;
-        }
-
-        public string GetPlayerCashString()
-        {
-            return player.Cash.ToString();
+            return Player.Cash;
         }
 
         public bool IsBettingAllowed()
         {
-            return player.CurrentBet == null;
+            return Player.CurrentBet == null;
         }
 
         public void UserHit(UserType user)
@@ -47,25 +41,18 @@ namespace Blackjack.GamePlay
 
         public bool HasUserBusted(UserType user)
         {
-            if (user == UserType.Player)
-            {
-                return player.HasPlayerBusted();
-            }
-            else
-            {
-                return dealer.HasDealerBusted();
-            }
+            return user == UserType.Player ? Player.HasPlayerBusted() : Dealer.HasDealerBusted();
         }
 
         private void HitUser(UserType user)
         {
             if (user == UserType.Player)
             {
-                player.CurrentHand.AddCard(deck.GetCard());
+                Player.CurrentHand.AddCard(Deck.GetCard());
             }
             else
             {
-                dealer.CurrentHand.AddCard(deck.GetCard());
+                Dealer.CurrentHand.AddCard(Deck.GetCard());
             }
         }
 
@@ -80,99 +67,84 @@ namespace Blackjack.GamePlay
 
         public string GetPlayerCardCount()
         {
-            return player.CurrentHand.GetTotal().ToString();
+            return Player.CurrentHand.GetTotal().ToString();
         }
 
         public string GetDealerCardCount()
         {
-            return dealer.CurrentHand.GetTotal().ToString();
+            return Dealer.CurrentHand.GetTotal().ToString();
         }
 
         public void NextRound()
         {
-            player.ResetRound();
+            Player.ResetRound();
 
-            dealer.ResetRound();
+            Dealer.ResetRound();
         }
 
         public GameResult DealersTurn()
         {
-            while (dealer.CurrentHand.GetTotal() < 17)
+            while (Dealer.CurrentHand.GetTotal() < 17)
             {
                 HitUser(UserType.Dealer);
             }
 
-            if (dealer.CurrentHand.GetTotal() == player.CurrentHand.GetTotal())
+            if (Dealer.CurrentHand.GetTotal() == Player.CurrentHand.GetTotal())
             {
                 return GameResult.Standoff;
             }
 
-            if (dealer.HasDealerBusted())
+            if (Dealer.HasDealerBusted())
             {
                 return GameResult.Win;
             }
 
-            if (dealer.CurrentHand.GetTotal() > player.CurrentHand.GetTotal())
-            {
-                return GameResult.Loss;
-            }
-            else
-            {
-                return GameResult.Win;
-            }
+            return Dealer.CurrentHand.GetTotal() > Player.CurrentHand.GetTotal() ? GameResult.Loss : GameResult.Win;
         }
 
-        public void Payout(GameResult Result)
+        public void Payout(GameResult result)
         {
-            if (Result == GameResult.Win || Result == GameResult.PlayerBlackjack)
+            if (result != GameResult.Win && result != GameResult.PlayerBlackjack) return;
+            
+            var payoutAmt = Player.CurrentBet;
+
+            if (result == GameResult.PlayerBlackjack)
             {
-                var payoutAmt = player.CurrentBet;
-
-                if (Result == GameResult.PlayerBlackjack)
-                {
-                    payoutAmt *= 1.5f;
-                }
-
-                player.CollectWinnings(payoutAmt);
+                payoutAmt *= 1.5f;
             }
+
+            Player.CollectWinnings(payoutAmt);
         }
 
         public List<Card> GetPlayerCardList()
         {
-            return player.CurrentHand.HandCards.Select(card => card).ToList();
+            return Player.CurrentHand.HandCards.Select(card => card).ToList();
         }
         public List<Card> GetDealerCardList()
         {
-            return dealer.CurrentHand.HandCards.Select(card => card).ToList();
+            return Dealer.CurrentHand.HandCards.Select(card => card).ToList();
         }
 
         public string GetCardBackImage()
         {
-            return player.CurrentHand.HandCards.FirstOrDefault()?.BackImagePath;
+            return Player.CurrentHand.HandCards.FirstOrDefault()?.BackImagePath;
         }
 
-        public bool ShouldCardsBeDisplayed(UserType User)
+        public bool ShouldCardsBeDisplayed(UserType user)
         {
-            if (User == UserType.Player)
+            if (user == UserType.Player)
             {
                 return true;
             }
 
-            var cardCount = dealer.CurrentHand.HandCards.Count;
-
-            var handValue = dealer.CurrentHand.GetTotal();
-
-            if (dealer.HasDealerBusted())
+            if (Dealer.HasDealerBusted())
             {
                 return true;
             }
+            
+            var cardCount = Dealer.CurrentHand.HandCards.Count;
 
-            if (cardCount == 21)
-            {
-                return true;
-            }
-
-            return false;
+            return cardCount == 21;
         }
     }
 }
