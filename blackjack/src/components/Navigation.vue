@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-gray-800 w-screen pt-0 m-0">
-      <div>
-          <h1 class="text-white text-3xl">BlackJack</h1>
+  <div class="bg-gray-800 w-screen">
+      <div class="">
+          <h1 class="text-white text-3xl text-left pl-10 py-5">BlackJack</h1>
       </div>
   </div>
 </template>
