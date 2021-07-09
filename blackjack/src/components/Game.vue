@@ -13,7 +13,7 @@
             <div class="px-16">
                 <h1 class="text-white text-2xl"><u>Player</u></h1>
                 <h2 class="text-white">Score: {{ playerScore }}</h2>
-                <h2 class="text-white">Cash: ${{ playerScore }}</h2>
+                <h2 class="text-white">Cash: ${{ playerCash }}</h2>
             </div>
         </div>
         
@@ -52,7 +52,6 @@ export default {
   data: () => ({
       dealerScore: 0,
       playerScore: 0,
-      playerCash: 0,
       possibleBets: [
         {Amount: 9999, Text: "Bet All"},
         {Amount: 1, Text: "$1"},
@@ -69,6 +68,11 @@ export default {
         {id: 1, src: "https://alejandropersonalstorage.blob.core.windows.net/public-images/Ace-of-Diamonds.png", name: "Ace of Diamonds"},
       ],
   }),
+  computed: {
+    playerCash() {
+      return this.$store.state.playerCash;
+    }
+  }
 };
 </script>
 
