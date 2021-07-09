@@ -1,7 +1,7 @@
 <template>
   <div class="bg-black">
     <div class="p-5">
-      <div class="flex flex-col">
+      <div v-if="gameStarted" class="flex flex-col">
         <div class="flex flex-row p-5 justify-between">
           <div class="pr-5">
             <img
@@ -51,7 +51,7 @@
             <h3 class="text-white text-4xl pl-4">Bet</h3>
           </div>
           <div class="">
-            <button class="btn">Hit</button>
+            <button class="btn" >Hit</button>
             <button class="btn">Stay</button>
           </div>
         </div>
@@ -59,6 +59,12 @@
           <div v-for="bet in possibleBets" :key="bet.Amount">
             <button class="btn mx-2 px-4">{{ bet.Text }}</button>
           </div>
+        </div>
+      </div>
+
+      <div v-if="!gameStarted"  class="h-96">
+        <div class="flex justify-center mt-80">
+          <button class="btn" @click="StartGame">Start Game</button>
         </div>
       </div>
     </div>
@@ -71,7 +77,11 @@ import gamePlayDataAccess from "../dataAccess/gamePlayDataAccess";
 export default {
   name: "Game",
   data: () => ({
+    gameStarted: false,
     gamePlayDAO: new gamePlayDataAccess(),
+    playerCash: 0,
+    dealerScore: 0,
+    playerScore: 0,
     possibleBets: [
       { Amount: 'All', Text: "Bet All" },
       { Amount: 1, Text: "$1" },
@@ -93,17 +103,13 @@ export default {
     ],
   }),
   computed: {
-    async playerCash() {
-      return await this.gamePlayDAO.getPlayerCash();
-    },
-    dealerScore() {
-      return 4;
-    },
-    playerScore() {
-      return 4;
+  },
+  methods: {
+    async StartGame() {
+      this.gameStarted = true;
+      this.playerCash = await this.gamePlayDAO.getPlayerCash();
     },
   }
-
 };
 </script>
 
