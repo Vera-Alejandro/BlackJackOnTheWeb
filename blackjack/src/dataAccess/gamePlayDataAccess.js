@@ -8,6 +8,21 @@ class gamePlayDataAccess {
 
         return store.getters.playerCash;
     }
+
+    async getPlayerScore() {
+        const response = await apiWWrapper.getPlayerScoreCall(null);
+        store.commit("updatePlayerCash", response.data);
+
+        return store.getters.playerCash;
+    }
+
+    async getDealerScore() {
+        const response = await apiWWrapper.getDealerScoreCall();
+        store.commit("updatePlayerCash", response.data);
+
+        return store.getters.playerCash;
+    }
+
 }
 
 export default gamePlayDataAccess;

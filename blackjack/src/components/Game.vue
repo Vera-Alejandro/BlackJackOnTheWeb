@@ -14,7 +14,7 @@
             <h2 class="text-white">Score: {{ dealerScore }}</h2>
           </div>
           <div class="px-16">
-            <h1 class="text-white text-2xl"><u>Player</u></h1>
+            <h1 class="text-white text-2xl"><u> {{ playerName }} </u></h1>
             <h2 class="text-white">Score: {{ playerScore }}</h2>
             <h2 class="text-white">Cash: ${{ playerCash }}</h2>
           </div>
@@ -51,7 +51,7 @@
             <h3 class="text-white text-4xl pl-4">Bet</h3>
           </div>
           <div class="">
-            <button class="btn" >Hit</button>
+            <button class="btn">Hit</button>
             <button class="btn">Stay</button>
           </div>
         </div>
@@ -62,7 +62,7 @@
         </div>
       </div>
 
-      <div v-if="!gameStarted"  class="h-96">
+      <div v-if="!gameStarted" class="h-96">
         <div class="flex justify-center mt-80">
           <button class="btn" @click="StartGame">Start Game</button>
         </div>
@@ -79,11 +79,12 @@ export default {
   data: () => ({
     gameStarted: false,
     gamePlayDAO: new gamePlayDataAccess(),
-    playerCash: 0,
-    dealerScore: 0,
-    playerScore: 0,
+    playerCash: null,
+    dealerScore: null,
+    playerScore: null,
+    playerName: null,
     possibleBets: [
-      { Amount: 'All', Text: "Bet All" },
+      { Amount: "All", Text: "Bet All" },
       { Amount: 1, Text: "$1" },
       { Amount: 5, Text: "$5" },
       { Amount: 10, Text: "$10" },
@@ -102,14 +103,15 @@ export default {
       },
     ],
   }),
-  computed: {
-  },
+  computed: {},
   methods: {
     async StartGame() {
       this.gameStarted = true;
       this.playerCash = await this.gamePlayDAO.getPlayerCash();
+      this.dealerScore = await this.gamePlayDAO.getPlayerScore();
+      this.playerScore = await this.gamePlayDAO.getDealerScore();
     },
-  }
+  },
 };
 </script>
 
