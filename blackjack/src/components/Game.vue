@@ -66,15 +66,12 @@
 </template>
 
 <script>
-// import gamePlayDataAccess from "../dataAccess/gamePlayDataAccess";
+import gamePlayDataAccess from "../dataAccess/gamePlayDataAccess";
 
 export default {
   name: "Game",
   data: () => ({
-    // gamePlayDAO: new gamePlayDataAccess(),
-    playerCash: 0,
-    dealerScore: 0,
-    playerScore: 0,
+    gamePlayDAO: new gamePlayDataAccess(),
     possibleBets: [
       { Amount: 'All', Text: "Bet All" },
       { Amount: 1, Text: "$1" },
@@ -95,11 +92,18 @@ export default {
       },
     ],
   }),
-  mounted: {
-    playerCash() {
-      return 42;
+  computed: {
+    async playerCash() {
+      return await this.gamePlayDAO.getPlayerCash();
     },
-  },
+    dealerScore() {
+      return 4;
+    },
+    playerScore() {
+      return 4;
+    },
+  }
+
 };
 </script>
 

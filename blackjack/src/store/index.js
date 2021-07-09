@@ -9,4 +9,7 @@ export default createStore({
             state.playerCash = playerCash;
         }
     },
+    getters: {
+        playerCash: state => state.playerCash,
+    }
 });
